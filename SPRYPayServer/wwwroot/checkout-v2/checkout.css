@@ -1,0 +1,253 @@
+:root {
+    --navbutton-size: .8rem;
+    --qr-size: 256px;
+    --icon-size: 64px;
+    --icon-border-size: var(--sprypay-space-xs);
+    --icon-border-color: var(--sprypay-white);
+    --section-padding: 1.5rem;
+    --border-radius: var(--sprypay-border-radius-l);
+    --wrap-max-width: 400px;
+}
+.public-page-wrap {
+    flex-direction: column;
+    max-width: var(--wrap-max-width);
+}
+main {
+    position: relative;
+    border-radius: var(--border-radius);
+    background-color: var(--sprypay-bg-tile);
+}
+nav {
+    position: absolute;
+    top: var(--sprypay-space-m);
+    left: var(--sprypay-space-m);
+    right: var(--sprypay-space-m);
+}
+nav button {
+    position: absolute;
+    top: 0;
+    border: none;
+    background: none;
+    color: var(--sprypay-body-text-muted);
+}
+nav button:hover {
+    color: var(--sprypay-body-text-hover);
+}
+nav button#close {
+    right: 0;
+}
+nav button .icon {
+    width: var(--navbutton-size);
+    height: var(--navbutton-size);
+}
+section {
+    padding: var(--section-padding);
+}
+section h4 {
+    margin-bottom: var(--sprypay-space-l);
+    font-weight: var(--sprypay-font-weight-semibold);
+    text-align: center;
+}
+section h5,
+section h6 {
+    margin-bottom: 1.5rem;
+    font-weight: var(--sprypay-font-weight-semibold);
+    text-align: center;
+}
+section .top {
+    flex: 1;
+}
+section .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sprypay-space-m);
+}
+section dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sprypay-space-m);
+}
+section dl > div dt,
+section dl > div dd {
+    margin: 0;
+    padding: var(--sprypay-space-xs) 0;
+    font-weight: var(--sprypay-font-weight-normal);
+}
+section dl > div dt {
+    text-align: left;
+    white-space: nowrap;
+    color: var(--sprypay-body-text-muted);
+}
+section dl > div dd {
+    text-align: right;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+.info {
+    color: var(--sprypay-neutral-700);
+    background-color: var(--sprypay-body-bg);
+    border-radius: var(--border-radius);
+}
+.info .expiryTime {
+    color: var(--sprypay-body-text);
+}
+.info > div {
+    padding: var(--sprypay-space-m) var(--sprypay-space-m);
+}
+.info > div > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--sprypay-space-xs);
+}
+.info > div > div + div {
+    margin-top: var(--sprypay-space-s);
+}
+.info .spinner-border {
+    width: var(--sprypay-font-size-s);
+    height: var(--sprypay-font-size-s);
+    color: var(--sprypay-body-text-muted);
+    margin-right: var(--sprypay-space-xs);
+    animation-duration: 1s;
+}
+.info .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--sprypay-info);
+}
+.payment-box {
+    max-width: 300px;
+    min-width: var(--qr-size);
+    margin: 0 auto;
+    text-align: center;
+}
+.payment-box .qr-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: var(--qr-size);
+}
+.payment-box .qr-container svg {
+    border-radius: var(--sprypay-border-radius);
+    padding: var(--sprypay-space-s);
+    background: var(--sprypay-white);
+    width: 100%;
+}
+.payment-box .qr-container img {
+    box-sizing: content-box;
+    position: absolute;
+    width: var(--icon-size);
+    border-radius: 50%;
+    padding: var(--icon-border-size);
+    background: var(--icon-border-color);
+}
+.payment-box .qr-container small {
+    display: none;
+}
+.payment-box .input-group {
+    align-items: flex-end;
+}
+.payment-box .input-group .form-control-plaintext {
+    padding-left: 3px;
+    padding-bottom: 0;
+    font-weight: var(--sprypay-font-weight-semibold);
+}
+.payment-box .input-group label {
+    padding-left: 0;
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    font-weight: var(--sprypay-font-weight-semibold);
+}
+.payment-box .input-group button {
+    padding: var(--sprypay-space-xs) 0;
+    font-weight: var(--sprypay-font-weight-semibold);
+}
+.payment-details dl {
+    margin: 0;
+}
+.payment-details-button {
+    margin: 0 auto;
+    padding: var(--sprypay-space-s);
+}
+.payment-details-button .icon {
+    margin-left: -1rem; /* Adjust for visual center */
+}
+[data-clipboard] {
+    cursor: copy;
+}
+.payment-details [data-clipboard] {
+    position: relative;
+}
+
+.payment-details [data-clipboard]::before {
+    content: '';
+    position: absolute;
+    top: .5rem;
+    left: -1.5rem;
+    width: 1rem;
+    height: 1rem;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2EpIiBzdHJva2U9IiM4Rjk3OUUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8cGF0aCBkPSJNMTMuMzMgNmgtNkM2LjYgNiA2IDYuNiA2IDcuMzN2NmMwIC43NC42IDEuMzQgMS4zMyAxLjM0aDZjLjc0IDAgMS4zNC0uNiAxLjM0LTEuMzR2LTZjMC0uNzMtLjYtMS4zMy0xLjM0LTEuMzNaIi8+CiAgICA8cGF0aCBkPSJNMy4zMyAxMGgtLjY2YTEuMzMgMS4zMyAwIDAgMS0xLjM0LTEuMzN2LTZhMS4zMyAxLjMzIDAgMCAxIDEuMzQtMS4zNGg2QTEuMzMgMS4zMyAwIDAgMSAxMCAyLjY3di42NiIvPgogIDwvZz4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iYSI+CiAgICAgIDxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0wIDBoMTZ2MTZIMHoiLz4KICAgIDwvY2xpcFBhdGg+CiAgPC9kZWZzPgo8L3N2Zz4K");
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--sprypay-transition-duration-fast);
+}
+.payment-details [data-clipboard]:hover::before {
+    opacity: 1;
+}
+#payment .sprypay-pills .sprypay-pill {
+    padding: var(--sprypay-space-xs) var(--sprypay-space-m);
+}
+#form > form,
+#result > div {
+    display: flex;
+    flex-direction: column;
+}
+
+#result .top .icn .icon {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    margin: .5rem auto 1.5rem;
+}
+
+#result #paid .top .icn .icon {
+    color: var(--sprypay-primary);
+}
+#result #expired .top .icn .icon {
+    color: var(--sprypay-body-text-muted);
+}
+#DefaultLang {
+    color: var(--sprypay-body-text-muted);
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    text-align: right;
+    cursor: pointer;
+    margin-left: -4.5rem; /* Adjust for visual center */
+}
+#DefaultLang:hover {
+    color: var(--sprypay-body-text-hover);
+}
+
+@media (max-width: 400px) {
+    main {
+        border-radius: 0;
+    }
+}
+
+/* Modal adjustments */
+.checkout-modal body {
+    background: rgba(var(--sprypay-black-rgb), 0.85);
+}
+.checkout-modal h1,
+.checkout-modal footer a:hover,
+.checkout-modal #DefaultLang:hover {
+    color: var(--sprypay-white);
+}
+
+/* Plugins */
+.payment-box .plugins > .payment {
+    margin-top: var(--sprypay-space-l);
+}

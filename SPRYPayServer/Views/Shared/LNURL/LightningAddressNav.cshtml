@@ -1,0 +1,19 @@
+@using SPRYPayServer.Views.Stores
+@using SPRYPayServer.Abstractions.Extensions
+@inject SPRYPayNetworkProvider SPRYPayNetworkProvider
+@{
+    const string cryptoCode = "SPRY";
+    var store = Context.GetStoreData();
+    var isLightningEnabled = store.IsLightningEnabled(SPRYPayNetworkProvider, cryptoCode);
+    var isLNUrlEnabled = store.IsLNUrlEnabled(SPRYPayNetworkProvider, cryptoCode);
+}
+
+@if (isLightningEnabled && isLNUrlEnabled)
+{
+    <li class="nav-item">
+        <a asp-area="" asp-controller="UILNURL" asp-action="EditLightningAddress" asp-route-storeId="@store.Id" class="nav-link @ViewData.IsActivePage("LightningAddress", nameof(StoreNavPages))" id="StoreNav-LightningAddress">
+            <vc:icon symbol="wallet-lightning"/>
+            <span>Lightning Address</span>
+        </a>
+    </li>
+}

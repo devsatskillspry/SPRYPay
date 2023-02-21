@@ -1,0 +1,688 @@
+/* Breakpoints:
+   XS <576px
+   SM ≥576px
+   MD ≥768px
+   LG ≥992px
+   XL ≥1200px */
+
+:root {
+    --mobile-header-height: 4rem;
+    --desktop-header-height: 8rem;
+    --sidebar-width: 280px;
+}
+
+/* Main Menu */
+#mainMenu {
+    --button-width: 40px;
+    --button-height: 40px;
+    --button-padding: 7px;
+    --icon-size: 1.5rem;
+    --menu-border: 1px solid var(--sprypay-body-border-light);
+    height: var(--header-height);
+    z-index: 1031; /* needs a value between fixed and the offcanvas backdrop, see https://getbootstrap.com/docs/5.1/layout/z-index/ */
+}
+
+#mainMenuHead  {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#mainMenuHead .mainMenuButton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--button-width);
+    height: var(--button-height);
+    padding: var(--button-padding);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: var(--sprypay-body-text-muted);
+}
+
+#mainNav {
+    --sprypay-scrollbar-color: var(--sprypay-neutral-400);
+    height: calc(100vh - var(--mobile-header-height));
+    overflow-y: auto;
+    padding-top: var(--sprypay-space-m);
+}
+
+#mainNav .nav-item svg.icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    margin-right: var(--sprypay-space-xs);
+}
+
+#mainNav .accordion-button {
+    padding: var(--sprypay-space-s) 0;
+    text-transform: uppercase;
+    color: var(--sprypay-body-text-muted);
+    font-weight: var(--sprypay-font-weight-semibold);
+}
+
+#mainNav .accordion-item {
+    border: none !important;
+}
+
+#mainNav .navbar-nav > li.nav-item .nav-link {
+    display: inline-flex;
+    align-items: center;
+    font-weight: var(--sprypay-font-weight-semibold);
+    color: var(--sprypay-header-link);
+    transition-property: color;
+    transition-duration: var(--sprypay-transition-duration-fast);
+}
+
+#mainNav .navbar-nav > li.nav-item .nav-link .icon {
+    flex-shrink: 0;
+}
+
+#mainNav .navbar-nav > li.nav-item .nav-link span {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#mainNav .navbar-nav > li.nav-item .nav-link:focus,
+#mainNav .navbar-nav > li.nav-item .nav-link:hover {
+    color: var(--sprypay-header-link-accent);
+}
+
+#mainNav .navbar-nav > li.nav-item .nav-link.active,
+#mainNav .navbar-nav > li.nav-item .nav-link.active:focus,
+#mainNav .navbar-nav > li.nav-item .nav-link.active:hover {
+    color: var(--sprypay-header-link-active);
+}
+
+#mainNavSettings {
+    margin-top: auto;
+}
+
+.navbar-brand,
+.navbar-brand:hover,
+.navbar-brand:focus {
+    color: inherit;
+}
+
+.sprypay-header {
+    color: var(--sprypay-header-text);
+    background: var(--sprypay-header-bg);
+}
+
+#mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#mainContent > section {
+    flex: 1;
+    padding: var(--content-padding-top) var(--content-padding-horizontal) var(--content-padding-bottom);
+}
+
+#StoreSelector {
+    display: flex;
+    align-items: center;
+    z-index: 2000;
+    flex: 1;
+}
+
+#StoreSelector hr {
+    height: 1px;
+}
+
+#StoreSelectorHome {
+    position: relative;
+}
+
+#StoreSelectorHome .badge {
+    position: absolute;
+    top: .25rem;
+    left: 100%;
+    font-size: 9px;
+}
+
+#StoreSelectorDropdown,
+#StoreSelectorToggle {
+    width: 100%;
+}
+
+#StoreSelectorToggle {
+    display: flex;
+    align-items: center;
+    color: var(--sprypay-header-link);
+    background-color: var(--sprypay-header-bg);
+}
+
+#StoreSelectorToggle.empty-state {
+    color: var(--sprypay-body-text-muted);
+}
+
+#StoreSelectorToggle::after {
+    content: none;
+}
+
+#StoreSelectorToggle,
+#StoreSelectorToggle .logo,
+#StoreSelectorToggle .icon {
+    transition: unset;
+    transition-property: color, border-color;
+    transition-timing-function: ease, ease;
+    transition-duration: var(--sprypay-transition-duration-fast), var(--sprypay-transition-duration-fast);
+}
+
+#StoreSelectorToggle .logo,
+#StoreSelectorToggle .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    /* Fixes seemingly delayed icon animation */
+    -webkit-transition-duration: 0.05s, var(--sprypay-transition-duration-fast);
+}
+
+#StoreSelectorToggle .logo,
+#StoreSelectorToggle .icon.icon-store {
+    margin-right: var(--sprypay-space-s);
+}
+
+#StoreSelectorToggle .logo {
+    border-radius: 50%;
+}
+
+#StoreSelectorToggle .icon.icon-caret-down {
+    margin-left: auto;
+    color: var(--sprypay-body-text-muted);
+}
+
+#StoreSelectorToggle span {
+    margin-right: var(--sprypay-space-xs);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#StoreSelectorToggle:hover,
+#StoreSelectorToggle:focus,
+#StoreSelectorToggle:hover .icon,
+#StoreSelectorToggle:focus .icon {
+    color: var(--sprypay-header-link-accent);
+}
+
+#StoreSelectorMenu {
+    min-width: 100%;
+    max-height: calc(100vh - var(--header-height));
+    overflow-y: scroll;
+}
+
+/* Logo */
+#mainMenuHead .main-logo {
+    display: inline-block;
+    height: 2rem;
+}
+
+@media (max-width: 575px) {
+    #mainMenuHead .main-logo-custom {
+        max-width: 25vw;
+    }
+
+    #mainMenuHead .main-logo-sprypay {
+        width: 1.125rem;
+    }
+
+    #mainMenuHead .main-logo-sprypay .main-logo-sprypay--large {
+        display: none;
+    }
+}
+
+@media (min-width: 576px) {
+    #mainMenuHead .main-logo-custom {
+        max-width: 10.5rem;
+    }
+
+    #mainMenuHead .main-logo-sprypay {
+        width: 4.625rem;
+    }
+
+    #mainMenuHead .main-logo-sprypay .main-logo-sprypay--small {
+        display: none;
+    }
+}
+
+/* Theme Switch */
+#mainNav .sprypay-theme-switch {
+    width: 100%;
+    justify-content: space-between;
+}
+
+#mainNav .sprypay-theme-switch svg {
+    order: 1;
+    margin: 0 !important;
+}
+
+#mainNav .sprypay-theme-switch span {
+    order: 0;
+    margin: 0;
+}
+
+.sprypay-theme-switch {
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    cursor: pointer;
+    border: 0;
+}
+
+.sprypay-theme-switch svg {
+    height: 1rem;
+    width: 1rem;
+}
+
+.sprypay-theme-switch svg ~ span {
+    margin-left: var(--sprypay-space-xs);
+}
+
+.sprypay-theme-switch path {
+    stroke-width: .5px;
+    fill: currentColor;
+}
+
+.sprypay-theme-switch:hover .sprypay-theme-switch-light,
+.sprypay-theme-switch:hover .sprypay-theme-switch-dark {
+    fill: currentColor;
+}
+
+.sprypay-theme-switch-dark {
+    stroke: currentColor;
+}
+
+:root[data-sprypay-theme="dark"] .sprypay-theme-switch-dark {
+    display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-sprypay-theme="dark"]) .sprypay-theme-switch-dark {
+        display: inline-block;
+    }
+}
+
+.sprypay-theme-switch-light {
+    display: none;
+}
+
+:root[data-sprypay-theme="dark"] .sprypay-theme-switch-light {
+    display: inline-block;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-sprypay-theme="light"]) .sprypay-theme-switch-light {
+        display: inline-block;
+    }
+}
+
+/* Notifications */
+#Notifications {
+    flex: 0 0 var(--button-width);
+}
+
+#NotificationsBadge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 1.75em;
+}
+
+#NotificationsHandle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--sprypay-header-link);
+}
+
+#NotificationsHandle:hover svg {
+    color: var(--sprypay-header-link-accent);
+}
+
+#NotificationsDropdown {
+    border: 0;
+    border-radius: var(--sprypay-border-radius-l);
+    background-color: var(--sprypay-body-bg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 16%);
+    padding: 0;
+    z-index: 2000;
+    top: var(--sprypay-space-xs) !important;
+    border: 1px solid var(--sprypay-body-border-medium);
+}
+
+#NotificationsList svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Section Navigation / Subnav */
+#SectionNav {
+    --border-size: 2px;
+    margin-bottom: var(--sprypay-space-l);
+    border-bottom: var(--border-size) solid var(--sprypay-body-border-light);
+}
+
+#SectionNav .nav {
+    margin-bottom: calc(var(--border-size) * -1);
+}
+
+#SectionNav .nav-link {
+    color: var(--sprypay-nav-link);
+    border-bottom: var(--border-size) solid transparent;
+    padding: var(--sprypay-space-m) 0;
+    font-weight: var(--sprypay-font-weight-semibold);
+    white-space: nowrap;
+}
+
+#SectionNav .nav-link:last-child {
+    margin-right: 0;
+}
+
+#SectionNav .nav-link:hover {
+    color: var(--sprypay-nav-link-accent);
+}
+
+#SectionNav .nav-link.active {
+    color: var(--sprypay-nav-link-active);
+    border-bottom-color: var(--sprypay-nav-border-active);
+    background: var(--sprypay-nav-bg-active);
+}
+
+/* Sticky Header: The <div class="sticky-header-setup"></div> needs to be included once
+   before the first sticky-header on the page. The sticky-header has a padding-top so
+   that it does not scroll underneath the fixed header on mobile. The sticky-header-setup
+   negates that padding with a negative margin, so that everything fits in the end. */
+.sticky-header-setup {
+    margin-top: calc(var(--content-padding-top) * -1);
+}
+
+.sticky-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    background: var(--sprypay-body-bg);
+    /* pull it out of the content padding and adjust its inner padding to make up for that space */
+    margin-left: calc(var(--content-padding-horizontal) * -1);
+    margin-right: calc(var(--content-padding-horizontal) * -1);
+    padding: var(--content-padding-top) var(--content-padding-horizontal) var(--sprypay-space-l);
+}
+
+.sticky-header #SectionNav {
+    margin-bottom: calc(var(--sprypay-space-l) * -1);
+}
+
+/* Footer */
+.sprypay-footer {
+    font-size: var(--sprypay-font-size-s);
+    overflow: hidden;
+    padding: 0 var(--content-padding-horizontal) 1rem;
+    color: var(--sprypay-footer-text);
+    background: var(--sprypay-footer-bg);
+}
+
+.sprypay-footer a {
+    color: var(--sprypay-footer-link);
+    text-decoration: none;
+}
+
+.sprypay-footer a:focus,
+.sprypay-footer a:hover {
+    color: var(--sprypay-footer-link-accent);
+}
+
+@media (max-width: 991px) {
+    :root {
+        --header-height: var(--mobile-header-height);
+        --content-padding-top: calc(var(--header-height) + var(--sprypay-space-m));
+        --content-padding-bottom: var(--sprypay-space-xl);
+        --content-padding-horizontal: var(--sprypay-space-m);
+
+        /* Prevent anchors from disappearing underneath the fixed header */
+        scroll-padding: var(--content-padding-top);
+    }
+    
+    #mainMenu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        border-bottom: var(--menu-border);
+    }
+
+    #mainMenuHead  {
+        padding: var(--sprypay-space-s) var(--sprypay-space-m);
+    }
+
+    #mainNav {
+        position: fixed;
+        top: var(--mobile-header-height);
+        bottom: 0;
+        left: 0;
+        width: var(--sidebar-width);
+        z-index: 1045;
+        border-right: var(--menu-border);
+        color: var(--sprypay-body-text);
+        background-color: inherit;
+        background-clip: padding-box;
+        outline: 0;
+        transform: translateX(-100%);
+        transition: transform var(--sprypay-transition-duration-fast) ease-in-out;
+        /* Fixes https://github.com/sprypayserver/sprypayserver/issues/3807 */
+        height: calc(100vh - var(--mobile-header-height)); /* This line is a fallback for browsers which don't support "fill-available" */
+        height: -moz-available;
+        height: -webkit-fill-available;
+        height: fill-available;
+        /* Since we can't do "calc(fill-available - var(--mobile-header-height));" I'm using "padding-bottom" instead */
+        padding-bottom: var(--mobile-header-height);
+        /* END FIX */
+    }
+
+    #mainNav.show {
+        transform: none;
+    }
+
+    .offcanvas-backdrop {
+        top: var(--mobile-header-height);
+        transition-duration: var(--sprypay-transition-duration-fast);
+    }
+
+    .offcanvas-backdrop.show {
+        opacity: 0.8;
+    }
+
+    #StoreSelector {
+        margin: 0 auto;
+        max-width: 60vw;
+    }
+    
+    #Notifications {
+        margin-left: var(--sprypay-space-s);
+    }
+
+    #mainMenuToggle {
+        --line-thickness: 2px;
+        --transition-easing: ease-in-out;
+        --transition-duration: var(--sprypay-transition-duration-fast);
+
+        flex: 0 0 var(--button-width);
+        margin-right: var(--sprypay-space-s);
+        margin-left: calc(var(--button-padding) * -1);
+    }
+
+    #mainMenuToggle span {
+        position: relative;
+        display: inline-block;
+        width: calc(var(--button-width) - var(--button-padding) * 2);
+        height: calc(var(--button-height) - (var(--button-padding) * 2) - (var(--line-thickness) * 4));
+        border-top: var(--line-thickness) solid;
+        border-bottom: var(--line-thickness) solid;
+        color: var(--sprypay-body-text-muted);
+        font-size: 0;
+        transition: all var(--transition-duration) var(--transition-easing);
+    }
+
+    #mainMenuToggle span:before,
+    #mainMenuToggle span:after {
+        position: absolute;
+        display: block;
+        content: '';
+        width: 100%;
+        height: var(--line-thickness);
+        top: 50%;
+        left: 50%;
+        background: currentColor;
+        transform: translate(-50%, -50%);
+        transition: transform var(--transition-duration) var(--transition-easing);
+    }
+
+    #mainMenuToggle:hover span {
+        color: var(--sprypay-header-text);
+    }
+
+    #mainMenuToggle[aria-expanded="true"] span {
+        border-color: transparent;
+    }
+
+    #mainMenuToggle[aria-expanded="true"] span:before {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    #mainMenuToggle[aria-expanded="true"] span:after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    #SectionNav {
+        --scroll-indicator-spacing: var(--sprypay-space-m);
+        position: relative;
+    }
+
+    #SectionNav .nav {
+        --sprypay-scrollbar-width: none;
+        --sprypay-scrollbar-color: transparent;
+
+        flex-wrap: nowrap;
+        overflow: auto visible;
+        -webkit-overflow-scrolling: touch;
+        margin-left: calc(var(--scroll-indicator-spacing) * -1);
+        margin-right: calc(var(--scroll-indicator-spacing) * -1);
+        padding: 0 var(--scroll-indicator-spacing);
+    }
+
+    #SectionNav .nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Horizontal scroll indicators */
+    #SectionNav:before,
+    #SectionNav:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: calc(var(--border-size) * -1);
+        width: var(--sprypay-space-m);
+    }
+
+    #SectionNav:before {
+        background-image: linear-gradient(to right, var(--sprypay-body-bg), rgba(var(--sprypay-body-bg-rgb), 0));
+        left: calc(var(--scroll-indicator-spacing) * -1);
+    }
+
+    #SectionNav:after {
+        background-image: linear-gradient(to left, var(--sprypay-body-bg), rgba(var(--sprypay-body-bg-rgb), 0));
+        right: calc(var(--scroll-indicator-spacing) * -1);
+    }
+
+    #SectionNav .nav-link {
+        margin-right: 1.5rem;
+        border-bottom-color: var(--sprypay-body-border-light);
+    }
+}
+
+@media (min-width: 992px) {
+    :root {
+        --header-height: var(--desktop-header-height);
+        --content-padding-top: 5rem;
+        --content-padding-bottom: 5rem;
+        --content-padding-horizontal: 5rem;
+    }
+    
+    #mainMenu {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: var(--sidebar-width);
+        height: 100vh;
+        border-right: var(--menu-border);
+    }
+
+    #mainMenuHead {
+        flex-wrap: wrap;
+        padding: var(--sprypay-space-m) 1.5rem;
+    }
+
+    #Notifications {
+        order: 1;
+        margin-left: auto;
+    }
+
+    #StoreSelector {
+        order: 2;
+        margin-top: var(--sprypay-space-m);
+        /* Make sure we are actually taking up all of the space or else you end up with this: https://github.com/sprypayserver/sprypayserver/issues/3972 */
+        min-width: 100%;
+    }
+    
+    #mainMenuToggle,
+    .offcanvas-backdrop {
+        display: none !important;
+    }
+
+    #NotificationsDropdown {
+        inset: calc(var(--button-height) * -1 - var(--sprypay-space-s)) auto auto calc(var(--button-width) + var(--sprypay-space-s)) !important;
+        width: 400px;
+    }
+
+    #mainContent {
+        margin-left: var(--sidebar-width);
+    }
+
+    #mainContent pre {
+        max-width: calc(100vw - var(--sidebar-width) - (2 * var(--sprypay-space-xl)) - 1rem); /* 1rem for scrollbar */
+    }
+
+    #mainContent > section {
+        margin: 0;
+        max-width: none;
+    }
+
+    #SectionNav .nav {
+        margin-top: calc(var(--sprypay-space-m) * -1);
+    }
+
+    #SectionNav .nav {
+        border-bottom: var(--border-size) solid var(--sprypay-body-border-light);
+    }
+
+    #SectionNav .nav-link {
+        margin-top: var(--sprypay-space-s);
+        margin-right: var(--sprypay-space-l);
+        margin-bottom: calc(var(--border-size) * -1);
+    }
+}
+
+@media (max-width: 449px) {
+    #StoreSelector {
+        max-width: 40vw;
+        flex-shrink: 1;
+    }
+
+    #StoreSelectorToggle .icon.icon-store {
+        display: none;
+    }
+}

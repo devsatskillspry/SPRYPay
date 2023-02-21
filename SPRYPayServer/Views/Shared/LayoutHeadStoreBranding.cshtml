@@ -1,0 +1,37 @@
+@model (string BrandColor, string CssFileId, string CustomCSSLink, string EmbeddedCSS)
+@using SPRYPayServer.Abstractions.Extensions
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SPRYPayServer.Abstractions.Contracts
+@inject IFileService FileService
+@{
+    var cssUrl = !string.IsNullOrEmpty(Model.CssFileId)
+        ? await FileService.GetFileUrl(Context.Request.GetAbsoluteRootUri(), Model.CssFileId)
+        : null;
+}
+@if (!string.IsNullOrEmpty(Model.BrandColor))
+{
+    <style>
+        :root {
+            --sprypay-primary: @Model.BrandColor;
+            --sprypay-primary-bg-hover: @Model.BrandColor;
+            --sprypay-primary-bg-active: @Model.BrandColor;
+            --sprypay-primary-shadow: @Model.BrandColor;
+            --sprypay-body-link-accent: @Model.BrandColor;
+        }
+    </style>
+}
+@if (!string.IsNullOrEmpty(cssUrl))
+{
+    <link href="@cssUrl" asp-append-version="true" rel="stylesheet" />
+}
+@* Deprecated, but added for backwards-compatibility *@
+@if (!string.IsNullOrEmpty(Model.CustomCSSLink))
+{
+    <link href="@Model.CustomCSSLink" asp-append-version="true" rel="stylesheet" />
+}
+@if (!string.IsNullOrEmpty(Model.EmbeddedCSS))
+{
+    <style>
+        @Safe.Raw(Model.EmbeddedCSS)
+    </style>
+}

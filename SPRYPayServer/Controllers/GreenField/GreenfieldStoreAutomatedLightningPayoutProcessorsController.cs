@@ -1,0 +1,99 @@
+#nullable enable
+using System.Linq;
+using System.Threading.Tasks;
+using SPRYPayServer.Abstractions.Constants;
+using SPRYPayServer.Client;
+using SPRYPayServer.Client.Models;
+using SPRYPayServer.Data.Data;
+using SPRYPayServer.Payments;
+using SPRYPayServer.PayoutProcessors;
+using SPRYPayServer.PayoutProcessors.Lightning;
+using SPRYPayServer.PayoutProcessors.Settings;
+using SPRYPayServer.Services.Invoices;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using PayoutProcessorData = SPRYPayServer.Data.Data.PayoutProcessorData;
+
+namespace SPRYPayServer.Controllers.Greenfield
+{
+    [ApiController]
+    [Authorize(AuthenticationSchemes = AuthenticationSchemes.Greenfield)]
+    public class GreenfieldStoreAutomatedLightningPayoutProcessorsController : ControllerBase
+    {
+        private readonly PayoutProcessorService _payoutProcessorService;
+        private readonly EventAggregator _eventAggregator;
+
+        public GreenfieldStoreAutomatedLightningPayoutProcessorsController(PayoutProcessorService payoutProcessorService,
+            EventAggregator eventAggregator)
+        {
+            _payoutProcessorService = payoutProcessorService;
+            _eventAggregator = eventAggregator;
+        }
+
+        [Authorize(Policy = Policies.CanViewStoreSettings, AuthenticationSchemes = AuthenticationSchemes.Greenfield)]
+        [HttpGet("~/api/v1/stores/{storeId}/payout-processors/" + nameof(LightningAutomatedPayoutSenderFactory))]
+        [HttpGet("~/api/v1/stores/{storeId}/payout-processors/" + nameof(LightningAutomatedPayoutSenderFactory) +
+                 "/{paymentMethod}")]
+        public async Task<IActionResult> GetStoreLightningAutomatedPayoutProcessors(
+            string storeId, string? paymentMethod)
+        {
+            paymentMethod = !string.IsNullOrEmpty(paymentMethod) ? PaymentMethodId.Parse(paymentMethod).ToString() : null;
+            var configured =
+                await _payoutProcessorService.GetProcessors(
+                    new PayoutProcessorService.PayoutProcessorQuery()
+                    {
+                        Stores = new[] { storeId },
+                        Processors = new[] { LightningAutomatedPayoutSenderFactory.ProcessorName },
+                        PaymentMethods = paymentMethod is null ? null : new[] { paymentMethod }
+                    });
+
+            return Ok(configured.Select(ToModel).ToArray());
+        }
+
+        private static LightningAutomatedPayoutSettings ToModel(PayoutProcessorData data)
+        {
+            return new LightningAutomatedPayoutSettings()
+            {
+                PaymentMethod = data.PaymentMethod,
+                IntervalSeconds = InvoiceRepository.FromBytes<AutomatedPayoutBlob>(data.Blob).Interval
+            };
+        }
+
+        private static AutomatedPayoutBlob FromModel(LightningAutomatedPayoutSettings data)
+        {
+            return new AutomatedPayoutBlob() { Interval = data.IntervalSeconds };
+        }
+
+        [Authorize(Policy = Policies.CanModifyStoreSettings, AuthenticationSchemes = AuthenticationSchemes.Greenfield)]
+        [HttpPut("~/api/v1/stores/{storeId}/payout-processors/" + nameof(LightningAutomatedPayoutSenderFactory) +
+                 "/{paymentMethod}")]
+        public async Task<IActionResult> UpdateStoreLightningAutomatedPayoutProcessor(
+            string storeId, string paymentMethod, LightningAutomatedPayoutSettings request)
+        {
+            paymentMethod = PaymentMethodId.Parse(paymentMethod).ToString();
+            var activeProcessor =
+                (await _payoutProcessorService.GetProcessors(
+                    new PayoutProcessorService.PayoutProcessorQuery()
+                    {
+                        Stores = new[] { storeId },
+                        Processors = new[] { LightningAutomatedPayoutSenderFactory.ProcessorName },
+                        PaymentMethods = new[] { paymentMethod }
+                    }))
+                .FirstOrDefault();
+            activeProcessor ??= new PayoutProcessorData();
+            activeProcessor.Blob = InvoiceRepository.ToBytes(FromModel(request));
+            activeProcessor.StoreId = storeId;
+            activeProcessor.PaymentMethod = paymentMethod;
+            activeProcessor.Processor = LightningAutomatedPayoutSenderFactory.ProcessorName;
+            var tcs = new TaskCompletionSource();
+            _eventAggregator.Publish(new PayoutProcessorUpdated()
+            {
+                Data = activeProcessor,
+                Id = activeProcessor.Id,
+                Processed = tcs
+            });
+            await tcs.Task;
+            return Ok(ToModel(activeProcessor));
+        }
+    }
+}

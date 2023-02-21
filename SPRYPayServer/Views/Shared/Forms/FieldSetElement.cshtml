@@ -1,0 +1,17 @@
+@using SPRYPayServer.Forms
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject FormComponentProviders FormComponentProviders
+@model SPRYPayServer.Abstractions.Form.Field
+@if (!Model.Constant)
+{
+    <fieldset>
+        <legend class="h3 mt-4 mb-3">@Model.Label</legend>
+        @foreach (var field in Model.Fields)
+        {
+			if (FormComponentProviders.TypeToComponentProvider.TryGetValue(field.Type, out var partial))
+			{
+			    <partial name="@partial.View" for="@field"></partial>
+			}
+        }
+    </fieldset>
+}

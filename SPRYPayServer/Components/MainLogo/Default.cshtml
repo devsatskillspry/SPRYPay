@@ -1,0 +1,20 @@
+@using SPRYPayServer.Services
+@using SPRYPayServer.Abstractions.Contracts
+@using SPRYPayServer.Abstractions.Extensions
+@using SPRYPayServer.Abstractions.TagHelpers
+@inject ThemeSettings Theme
+@inject IFileService FileService
+@model SPRYPayServer.Components.MainLogo.MainLogoViewModel
+
+@if (!string.IsNullOrEmpty(Theme.LogoFileId))
+{
+    var logoSrc = await FileService.GetFileUrl(Context.Request.GetAbsoluteRootUri(), Theme.LogoFileId);
+    <img src="@logoSrc" alt="SPRYPay Server" class="main-logo main-logo-custom @Model.CssClass" />
+}
+else
+{
+    <svg xmlns="http://www.w3.org/2000/svg" role="img" alt="SPRYPay Server" class="main-logo main-logo-sprypay @Model.CssClass">
+        <use href="~/img/logo.svg#small" class="main-logo-sprypay--small"/>
+        <use href="~/img/logo.svg#large" class="main-logo-sprypay--large"/>
+    </svg>
+}
