@@ -50,6 +50,9 @@ public class StoreWalletBalance : ViewComponent
         var walletId = new WalletId(store.Id, cryptoCode);
         var data = await _walletHistogramService.GetHistogram(store, walletId, DefaultType);
         var defaultCurrency = store.GetStoreBlob().DefaultCurrency;
+        var mainCurrency = store.GetStoreBlob().mainCurrency;
+        var freelancerID = dashboard.GetDashboardBlob().freelancerID;
+        var employerID = dashboard.GetDashboardBlob().employerID;
 
         var vm = new StoreWalletBalanceViewModel
         {
@@ -57,6 +60,9 @@ public class StoreWalletBalance : ViewComponent
             CryptoCode = cryptoCode,
             CurrencyData = _currencies.GetCurrencyData(defaultCurrency, true),
             DefaultCurrency = defaultCurrency,
+            MainCurrency = mainCurrency,
+            FreelancerID = freelancerID,
+            EmployerID = employerID,
             WalletId = walletId,
             Type = DefaultType
         };
@@ -66,6 +72,7 @@ public class StoreWalletBalance : ViewComponent
             vm.Balance = data.Balance;
             vm.Series = data.Series;
             vm.Labels = data.Labels;
+            vm.UserID = data.UserID;
         }
         else
         {
@@ -74,8 +81,8 @@ public class StoreWalletBalance : ViewComponent
             var derivation = store.GetDerivationSchemeSettings(_networkProvider, walletId.CryptoCode);
             if (derivation is not null)
             {
-                var balance = await wallet.GetBalance(derivation.AccountDerivation, cts.Token);
-                vm.Balance = balance.Available.GetValue();
+                var balance = await wallet.MainCurrency(derivation.AccountDerivation);
+                vm.Balance = balance.mainCurrency.GetValue():
             }
         }
 

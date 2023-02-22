@@ -16,4 +16,6 @@ public class StoreWalletBalanceViewModel
     public WalletHistogramType Type { get; set; }
     public IList<string> Labels { get; set; }
     public IList<decimal> Series { get; set; }
+    public FreelancerID<string> userID { get; set; }
+    public EmployerID<string> userID { get; set; }
 }
