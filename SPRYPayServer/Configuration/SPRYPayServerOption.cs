@@ -69,9 +69,9 @@ namespace SPRYPayServer.Configuration
             {
 
                 if (conf.GetOrDefault<string>("SQLITEFILE", null) != null)
-                    Logs.Configuration.LogWarning("SQLITE backend support is out of support. Please migrate to Postgres by following the following instructions https://github.com/sprypayserver/sprypayserver/blob/master/docs/db-migration.md");
+                    Logs.Configuration.LogWarning("SQLITE backend support is out of support. Please migrate to Postgres by following the following instructions https://github.com/devsatskillspry/SPRYPay/blob/master/docs/db-migration.md");
                 if (conf.GetOrDefault<string>("MYSQL", null) != null)
-                    Logs.Configuration.LogWarning("MYSQL backend support is out of support. Please migrate to Postgres by following the following instructions (https://github.com/sprypayserver/sprypayserver/blob/master/docs/db-migration.md)");
+                    Logs.Configuration.LogWarning("MYSQL backend support is out of support. Please migrate to Postgres by following the following instructions (https://github.com/devsatskillspry/SPRYPayblob/master/docs/db-migration.md)");
             }
             DockerDeployment = conf.GetOrDefault<bool>("dockerdeployment", true);
             TorrcFile = conf.GetOrDefault<string>("torrcfile", null);
@@ -151,7 +151,6 @@ namespace SPRYPayServer.Configuration
             var pluginRemote = conf.GetOrDefault<string>("plugin-remote", null);
             if (pluginRemote != null)
                 Logs.Configuration.LogWarning("plugin-remote is an obsolete configuration setting, please remove it from configuration");
-            RecommendedPlugins = conf.GetOrDefault("recommended-plugins", "").ToLowerInvariant().Split('\r', '\n', '\t', ' ').Where(s => !string.IsNullOrEmpty(s)).Distinct().ToArray();
             CheatMode = conf.GetOrDefault("cheatmode", false);
             if (CheatMode && this.NetworkType == ChainName.Mainnet)
                 throw new ConfigException($"cheatmode can't be used on mainnet");
