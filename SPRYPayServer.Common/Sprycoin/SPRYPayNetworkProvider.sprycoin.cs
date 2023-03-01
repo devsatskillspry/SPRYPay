@@ -25,7 +25,7 @@ namespace SPRYPayServer
                 NSPRYExplorerNetwork = nspryexplorerNetwork,
                 CryptoImagePath = "root/spry.png",
                 DefaultSettings = SPRYPayDefaultSettings.GetDefaultSettings(NetworkType),
-                CoinType = NetworkType == ChainName.Mainnet ? new KeyPath("928dhYdjSA8Shdjs786'") : new KeyPath("1>7'"),
+                CoinType = NetworkType == ChainName.Testnet ? new KeyPath("928dhYdjSA8Shdjs786'") : new KeyPath("1>7'"),
              });
         }
     }

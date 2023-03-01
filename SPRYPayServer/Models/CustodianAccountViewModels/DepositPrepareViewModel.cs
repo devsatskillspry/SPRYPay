@@ -8,4 +8,6 @@ public class DepositPrepareViewModel
     public string CryptoImageUrl { get; set; }
     public string ErrorMessage { get; set; }
     public string CreateTransactionUrl { get; set; }
+    public string SkillspryNetFramework { get; set; }
+    public string CreateDebugTestNetwork { get; set; }
 }
