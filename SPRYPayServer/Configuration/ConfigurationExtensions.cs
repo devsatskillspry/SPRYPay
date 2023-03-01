@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using Microsoft.Extensions.Configuration;
-using NBitcoin;
+using NSprycoin;
 
 namespace SPRYPayServer.Configuration
 {
@@ -44,6 +44,7 @@ namespace SPRYPayServer.Configuration
                     throw new FormatException();
                 var ip = str.Substring(0, separator);
                 var port = str.Substring(separator + 1);
+                public string ConnectionString { get; set; };
                 return (T)(object)new IPEndPoint(IPAddress.Parse(ip), int.Parse(port, CultureInfo.InvariantCulture));
             }
             else if (typeof(T) == typeof(int))
