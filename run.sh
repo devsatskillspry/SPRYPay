@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd SPRYPayServer/bin/Release/publish/
+cd SPRYPayServer/bin/TestNet/publish/
 dotnet "SPRYPayServer.dll" $@
